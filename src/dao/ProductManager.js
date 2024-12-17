@@ -1,4 +1,4 @@
-const fs = require('fs').promises; // Módulo File System con Promesas
+const fs = require('fs').promises;
 
 class ProductManager {
     #products;

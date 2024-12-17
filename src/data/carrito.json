@@ -1,0 +1,169 @@
+[
+    {
+        "id": 1,
+        "title": "Carrito 1",
+        "products": [
+            {
+                "id": 1,
+                "quantity": 1,
+                "product": {
+                    "title": "Mouse",
+                    "description": "Mouse inalambrico",
+                    "code": "ML001",
+                    "price": 500,
+                    "stock": 10,
+                    "category": "Electronica",
+                    "thumbnails": [
+                        "./img/mouse.jpg"
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Carrito 2",
+        "products": [
+            {
+                "id": 1,
+                "quantity": 1,
+                "product": {
+                    "title": "Mouse",
+                    "description": "Mouse inalambrico",
+                    "code": "ML001",
+                    "price": 500,
+                    "stock": 10,
+                    "category": "Electronica",
+                    "thumbnails": [
+                        "./img/mouse.jpg"
+                    ]
+                }
+            },
+            {
+                "id": 2,
+                "quantity": 2,
+                "product": {
+                    "title": "Teclado",
+                    "description": "Teclado inalambrico",
+                    "code": "ML002",
+                    "price": 700,
+                    "stock": 15,
+                    "category": "Electronica",
+                    "thumbnails": [
+                        "./img/teclado.jpg"
+                    ]
+                }
+            },
+            {
+                "id": 3,
+                "quantity": 1,
+                "product": {
+                    "title": "Monitor",
+                    "description": "Monitor de 24 HD",
+                    "code": "ML003",
+                    "price": 10000,
+                    "stock": 5,
+                    "category": "Electronica",
+                    "thumbnails": [
+                        "./img/monitor.jpg"
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Carrito 3",
+        "products": [
+            {
+                "id": 1,
+                "quantity": 1,
+                "product": {
+                    "title": "Mouse",
+                    "description": "Mouse inalambrico",
+                    "code": "ML001",
+                    "price": 500,
+                    "stock": 10,
+                    "category": "Electronica",
+                    "thumbnails": [
+                        "./img/mouse.jpg"
+                    ]
+                }
+            },
+            {
+                "id": 2,
+                "quantity": 2,
+                "product": {
+                    "title": "Teclado",
+                    "description": "Teclado inalambrico",
+                    "code": "ML002",
+                    "price": 700,
+                    "stock": 15,
+                    "category": "Electronica",
+                    "thumbnails": [
+                        "./img/teclado.jpg"
+                    ]
+                }
+            },
+            {
+                "id": 3,
+                "quantity": 1,
+                "product": {
+                    "title": "Monitor",
+                    "description": "Monitor de 24 HD",
+                    "code": "ML003",
+                    "price": 10000,
+                    "stock": 5,
+                    "category": "Electronica",
+                    "thumbnails": [
+                        "./img/monitor.jpg"
+                    ]
+                }
+            },
+            {
+                "id": 4,
+                "quantity": 1,
+                "product": {
+                    "title": "Laptop",
+                    "description": "Laptop de 14 pulgadas",
+                    "code": "ML004",
+                    "price": 25000,
+                    "stock": 20,
+                    "category": "Electronica",
+                    "thumbnails": []
+                }
+            },
+            {
+                "id": 5,
+                "quantity": 1,
+                "product": {
+                    "title": "Auriculares",
+                    "description": "Auriculares bluetooth",
+                    "code": "ML005",
+                    "price": 1200,
+                    "stock": 30,
+                    "category": "Electronica",
+                    "thumbnails": [
+                        "./img/auriculares.jpg"
+                    ]
+                }
+            },
+            {
+                "id": 6,
+                "quantity": 1,
+                "product": {
+                    "title": "Impresora",
+                    "description": "Impresora de inyeccion de tinta",
+                    "code": "ML007",
+                    "price": 5000,
+                    "stock": 5,
+                    "category": "Electronica",
+                    "thumbnails": [
+                        "./img/impresora.jpg"
+                    ]
+                }
+            }
+        ]
+    }
+]
+

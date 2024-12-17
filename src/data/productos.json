@@ -1,0 +1,80 @@
+[
+    {
+        "id": 1,
+        "title": "Mouse",
+        "description": "Mouse inalambrico",
+        "code": "ML001",
+        "price": 500,
+        "status": true,
+        "stock": 10,
+        "category": "Electronica",
+        "thumbnails": [
+            "./img/mouse.jpg"
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Teclado",
+        "description": "Teclado inalambrico",
+        "code": "ML002",
+        "price": 700,
+        "status": true,
+        "stock": 15,
+        "category": "Electronica",
+        "thumbnails": [
+            "./img/teclado.jpg"
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Monitor",
+        "description": "Monitor de 24 HD",
+        "code": "ML003",
+        "price": 10000,
+        "status": true,
+        "stock": 5,
+        "category": "Electronica",
+        "thumbnails": [
+            "./img/monitor.jpg"
+        ]
+    },
+    {
+        "id": 4,
+        "title": "Laptop",
+        "description": "Laptop de 14 pulgadas",
+        "code": "ML004",
+        "price": 25000,
+        "status": true,
+        "stock": 20,
+        "category": "Electronica",
+        "thumbnails": [
+            "./img/laptop.jpg"
+        ]
+    },
+    {
+        "id": 5,
+        "title": "Auriculares",
+        "description": "Auriculares bluetooth",
+        "code": "ML005",
+        "price": 1200,
+        "status": true,
+        "stock": 30,
+        "category": "Electronica",
+        "thumbnails": [
+            "./img/auriculares.jpg"
+        ]
+    },
+    {
+        "id": 6,
+        "title": "Impresora",
+        "description": "Impresora de inyeccion de tinta",
+        "code": "ML007",
+        "price": 5000,
+        "status": true,
+        "stock": 5,
+        "category": "Electronica",
+        "thumbnails": [
+            "./img/impresora.jpg"
+        ]
+    }
+]

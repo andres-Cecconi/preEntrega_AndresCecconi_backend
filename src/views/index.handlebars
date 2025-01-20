@@ -1,0 +1,11 @@
+{{!-- Vista para mostrar productos estáticos --}}
+<h2>Productos Disponibles</h2>
+<ul>
+    {{#each products}}
+    <li>
+        <h3>{{this.title}}</h3>
+        <p>{{this.description}}</p>
+        <p>Precio: ${{this.price}}</p>
+    </li>
+    {{/each}}
+</ul>

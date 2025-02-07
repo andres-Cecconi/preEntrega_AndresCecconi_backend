@@ -1,105 +1,80 @@
-const fs = require('fs').promises;
-
+const Product = require('../models/product.model');
 class ProductManager {
-    #products;
-    #path;
-
-    constructor() {
-        this.#path = './src/data/productos.json'; // Ruta al archivo products.json
-        this.#products = [];
-        this.#loadProducts(); // Cargar productos al iniciar
-    }
-
-    // Método privado para cargar productos desde el archivo
-    async #loadProducts() {
+    // Obtener productos con paginación
+    async getProducts(limit = null, page = 1, sort = null, category = null) {
         try {
-            const data = await fs.readFile(this.#path, 'utf-8');
-            this.#products = JSON.parse(data);
+            const query = {};
+            if (category) {
+                query.category = { $regex: new RegExp(category, "i") };
+            }
+
+            const options = {
+                limit: parseInt(limit) || 10,
+                page: parseInt(page),
+                sort: sort === 'asc' ? { price: 1 } : sort === 'desc' ? { price: -1 } : {},
+            };
+
+            return await Product.paginate(query, options);
         } catch (error) {
-            this.#products = [];
+            console.error('🔴 Error al obtener productos:', error);
+            throw error;
         }
     }
 
-    // Método privado para guardar productos en el archivo
-    async #saveProducts() {
-        await fs.writeFile(this.#path, JSON.stringify(this.#products, null, 2));
-    }
-
-    // Método para agregar un producto
-    async addProduct({ title, description, code, price, stock, category, thumbnails }) {
-        // Validaciones
-        if (!title || !description || !code || price === undefined || stock === undefined || !category) {
-            throw new Error('Todos los campos son obligatorios excepto thumbnails');
-        }
-
-        // Verifica si el producto con el mismo código ya existe
-        await this.#loadProducts(); // Asegura que se trabaje con la última versión del archivo
-        const exists = this.#products.find(product => product.code === code);
-        if (exists) throw new Error('Ya existe un producto con ese código');
-
-        // Generación de ID autoincremental
-        const id = this.#products.length > 0 ? this.#products[this.#products.length - 1].id + 1 : 1;
-
-        const newProduct = {
-            id,
-            title,
-            description,
-            code,
-            price,
-            stock,
-            category,
-            thumbnails: thumbnails || []
-        };
-
-        this.#products.push(newProduct);
-        await this.#saveProducts();
-        return newProduct;
-    }
-
-    // Método para obtener todos los productos (con limit opcional)
-    async getProducts(limit) {
-        await this.#loadProducts();
-        return limit ? this.#products.slice(0, Number(limit)) : this.#products;
-    }
-
-    // Método para obtener un producto por ID
+    // Obtener un producto por su ID
     async getProductById(id) {
-        await this.#loadProducts();
-        const product = this.#products.find(product => product.id === Number(id));
-        return product || null;
+        try {
+            return await Product.findById(id);
+        } catch (error) {
+            console.error('🔴 Error al buscar producto:', error);
+            return null;
+        }
     }
 
-    // Método para actualizar un producto
-    async updateProduct(id, updateFields) {
-        await this.#loadProducts();
-        const productIndex = this.#products.findIndex(product => product.id === Number(id));
+    // Agregar un nuevo producto con validaciones
+    async addProduct(data) {
+        try {
+            // Verificar si el producto ya existe por su 'code'
+            const existingProduct = await Product.findOne({ code: data.code });
 
-        if (productIndex === -1) return null;
+            if (existingProduct) {
+                return { error: `🔴 El producto con el codigo ${data.code} ya existe`};
+            }
 
-        // No permite actualizar el ID
-        delete updateFields.id;
+            const newProduct = new Product(data);
+            await newProduct.save();
 
-        // Actualiza los campos proporcionados
-        this.#products[productIndex] = {
-            ...this.#products[productIndex],
-            ...updateFields
-        };
-
-        await this.#saveProducts();
-        return this.#products[productIndex];
+            return { message: "🟢 Producto agregado exitosamente", product: newProduct };
+        } catch (error) {
+            console.error('🔴 Error al agregar producto:', error);
+            throw error;
+        }
     }
 
-    // Método para eliminar un producto por ID
+    // Actualizar un producto por ID
+    async updateProduct(id, updateData) {
+        try {
+            return await Product.findByIdAndUpdate(id, updateData, { new: true });
+        } catch (error) {
+            console.error('🔴 Error al actualizar producto:', error);
+            return null;
+        }
+    }
+
+    // Eliminar un producto por ID
     async deleteProduct(id) {
-        await this.#loadProducts();
-        const productIndex = this.#products.findIndex(product => product.id === Number(id));
-
-        if (productIndex === -1) return false;
-
-        this.#products.splice(productIndex, 1);
-        await this.#saveProducts();
-        return true;
+        try {
+            const deletedProduct = await Product.findByIdAndDelete(id);
+            if (!deletedProduct) {
+                return { error: '🔴 Producto no encontrado' };
+            }
+            return { message: '🟢 Producto eliminado correctamente', product: deletedProduct };
+        } catch (error) {
+            console.error('🔴 Error al eliminar producto:', error);
+            return { error: '🔴 Error interno del servidor' };
+        }
     }
+    
 }
 
 module.exports = ProductManager;

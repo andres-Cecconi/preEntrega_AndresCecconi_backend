@@ -119,6 +119,13 @@
 //     console.log(`Servidor escuchando en el puerto ${PORT}`);
 // });
 
+//Conexion a Base de Datos Mongo Atlas
+const mongoose = require('mongoose');
+
+// Conectar con MongoDB Atlas
+mongoose.connect('mongodb+srv://ancecconi15:rml3ApvSeC2NK0c3@server-backendcoder.hch7i.mongodb.net/?retryWrites=true&w=majority&appName=server-backendCoder')
+.then(() => console.log('🟢 Conectado a MongoDB Atlas'))
+.catch(err => console.error('🔴 Error al conectar con MongoDB:', err));
 
 // Importamos los módulos necesarios
 const express = require('express');
@@ -139,7 +146,6 @@ const productManager = new ProductManager();
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
-
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

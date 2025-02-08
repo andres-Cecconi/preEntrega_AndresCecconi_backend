@@ -88,6 +88,15 @@ class CartManager {
             const cart = await Cart.findById(cid);
             if (!cart) return { error: '🔴 Carrito no encontrado' };
 
+
+            //Validacion de existencia de productos 
+            for (const item of newProducts) {
+                const productExists = await Product.findById(item.product);
+                if (!productExists) {
+                    return { error: `🔴 Producto con ID ${item.product} no encontrado` };
+                }
+            }
+
             // Reemplazar todos los productos del carrito con los nuevos productos
             cart.products = newProducts;
             await cart.save();
@@ -97,6 +106,26 @@ class CartManager {
             throw error;
         }
     }
+
+    //Put para modificar la quantity de un producto en el carrito
+    async updateProductQuantity(cid, pid, newQuantity) {
+        try {
+            const cart = await Cart.findById(cid);
+            if (!cart) return { error: '🔴 Carrito no encontrado' };
+    
+            const productInCart = cart.products.find(p => p.product.toString() === pid);
+            if (!productInCart) return { error: '🔴 Producto no encontrado en el carrito' };
+    
+            productInCart.quantity = newQuantity;
+            await cart.save();
+    
+            return cart;
+        } catch (error) {
+            console.error('🔴 Error al actualizar cantidad de producto en carrito:', error);
+            return { error: '🔴 Error interno del servidor' };
+        }
+    }
+    
 
     // Delete para eliminar un producto del carrito
     async removeProductFromCart(cid, pid) {
@@ -115,6 +144,21 @@ class CartManager {
             return cart;
         } catch (error) {
             console.error('🔴 Error al eliminar producto del carrito:', error);
+            return { error: '🔴 Error interno del servidor' };
+        }
+    }
+    
+    async clearCart(cid) {
+        try {
+            const cart = await Cart.findById(cid);
+            if (!cart) return { error: '🔴 Carrito no encontrado' };
+    
+            cart.products = [];
+            await cart.save();
+    
+            return cart;
+        } catch (error) {
+            console.error('🔴 Error al vaciar carrito:', error);
             return { error: '🔴 Error interno del servidor' };
         }
     }    

@@ -48,8 +48,30 @@ router.put('/:cid', async (req, res) => {
     const updatedCart = await cartManager.updateCart(cid, products);
     if (updatedCart.error) return res.status(404).json({ error: updatedCart.error });
 
-    res.json(updatedCart);
+    res.json({
+        message: "🟢 Carrito actualizado correctamente",
+        cart: updatedCart
+    });
 });
+
+//PUT: Modificar quantity de un producto en el carrito
+router.put('/:cid/products/:pid', async (req, res) => {
+    const { cid, pid } = req.params;
+    const { quantity } = req.body;
+
+    if (!quantity || quantity <= 0) {
+        return res.status(400).json({ error: '🔴 La cantidad debe ser un número positivo' });
+    }
+
+    const updatedCart = await cartManager.updateProductQuantity(cid, pid, quantity);
+    if (updatedCart.error) return res.status(404).json({ error: updatedCart.error });
+
+    res.json({
+        message: "🟢 Cantidad de producto actualizada en el carrito",
+        cart: updatedCart
+    });
+});
+
 
 // DELETE: Eliminar un producto específico del carrito
 router.delete('/:cid/products/:pid', async (req, res) => {
@@ -58,7 +80,21 @@ router.delete('/:cid/products/:pid', async (req, res) => {
     const updatedCart = await cartManager.removeProductFromCart(cid, pid);
     if (updatedCart.error) return res.status(404).json({ error: updatedCart.error });
 
-    res.json({ message: "🟢 Producto eliminado correctamente del carrito", cart: updatedCart });
+    res.json({ message: "🟢 Producto eliminado correctamente del carrito", cart: updatedCart });    
 });
+
+//DELETE: Vaciar el carrito
+router.delete('/:cid', async (req, res) => {
+    const { cid } = req.params;
+
+    const updatedCart = await cartManager.clearCart(cid);
+    if (updatedCart.error) return res.status(404).json({ error: updatedCart.error });
+
+    res.json({
+        message: "🟢 Carrito vaciado exitosamente",
+        cart: updatedCart
+    });
+});
+
 
 module.exports = router;

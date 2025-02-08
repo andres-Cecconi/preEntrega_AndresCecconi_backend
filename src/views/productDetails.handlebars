@@ -1,22 +1,10 @@
-<h1>Lista de Productos</h1>
-{{#each products}}
-    <div>
-        <h2>{{this.title}}</h2>
-        <p>Precio: {{this.price}}</p>
-        <a href="/products/{{this._id}}">Ver Detalles</a>
-        <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
-    </div>
-{{/each}}
-
-{{#if hasPrevPage}}
-    <a href="{{prevLink}}">Página Anterior</a>
-{{/if}}
-
-{{#if hasNextPage}}
-    <a href="{{nextLink}}">Página Siguiente</a>
-{{/if}}
-
+<h1>{{product.title}}</h1>
+<p>{{product.description}}</p>
+<p>Precio: {{product.price}}</p>
+<p>Stock disponible: {{product.stock}}</p>
+<button onclick="addToCart('{{product._id}}')">Agregar al carrito</button>
 <button onclick="viewCart()">Ver Carrito</button>
+<a href="/products">Volver a productos</a>
 
 <script>
     function addToCart(productId) {

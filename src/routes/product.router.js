@@ -20,10 +20,12 @@ router.get('/', async (req, res) => {
             limit: parseInt(limit),
             page: parseInt(page),
             sort: sort === 'asc' ? { price: 1 } : sort === 'desc' ? { price: -1 } : {},
-            lean: true 
+            lean: true
         };
 
         const products = await productManager.getProducts(limit, page, sort, category);
+
+        const baseUrl = `${req.protocol}://${req.get("host")}/api/products`;
 
         // Construcción del objeto de respuesta con paginación
         const response = {
@@ -35,12 +37,16 @@ router.get('/', async (req, res) => {
             page: products.page,
             hasPrevPage: products.hasPrevPage,
             hasNextPage: products.hasNextPage,
-            prevLink: products.hasPrevPage ? `/api/products?page=${products.page - 1}&limit=${limit}` : null,
-            nextLink: products.hasNextPage ? `/api/products?page=${products.page + 1}&limit=${limit}` : null
+            prevLink: products.hasPrevPage
+                ? `${baseUrl}?limit=${limit}&page=${products.page - 1}&sort=${sort || ''}&category=${category || ''}`
+                : null,
+            nextLink: products.hasNextPage
+                ? `${baseUrl}?limit=${limit}&page=${products.page + 1}&sort=${sort || ''}&category=${category || ''}`
+                : null
         };
 
         res.json(response);
-        
+
     } catch (error) {
         console.error('🔴 Error al obtener productos:', error);
         res.status(500).json({ error: '🔴 Error interno del servidor' });

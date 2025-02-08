@@ -1,7 +1,7 @@
 const Product = require('../models/product.model');
 class ProductManager {
     // Obtener productos con paginación
-    async getProducts(limit = null, page = 1, sort = null, category = null) {
+    async getProducts(limit = 10, page = 1, sort = null, category = null) {
         try {
             const query = {};
             if (category) {
@@ -9,9 +9,10 @@ class ProductManager {
             }
 
             const options = {
-                limit: parseInt(limit) || 10,
+                limit: parseInt(limit),
                 page: parseInt(page),
                 sort: sort === 'asc' ? { price: 1 } : sort === 'desc' ? { price: -1 } : {},
+                lean: true
             };
 
             return await Product.paginate(query, options);

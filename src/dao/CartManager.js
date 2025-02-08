@@ -104,15 +104,15 @@ class CartManager {
             const cart = await Cart.findById(cid);
             if (!cart) return { error: '🔴 Carrito no encontrado' };
     
-            const initialLength = cart.products.length;
-            cart.products = cart.products.filter(p => p.product.toString() !== pid);
-            
-            if (cart.products.length === initialLength) {
+            const productIndex = cart.products.findIndex(p => p.product.toString() === pid);
+            if (productIndex === -1) {
                 return { error: '🔴 Producto no encontrado en el carrito' };
             }
     
+            cart.products.splice(productIndex, 1);
             await cart.save();
-            return { message: '🟢 Producto eliminado del carrito correctamente', cart };
+
+            return cart;
         } catch (error) {
             console.error('🔴 Error al eliminar producto del carrito:', error);
             return { error: '🔴 Error interno del servidor' };

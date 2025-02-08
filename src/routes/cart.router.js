@@ -58,7 +58,7 @@ router.delete('/:cid/products/:pid', async (req, res) => {
     const updatedCart = await cartManager.removeProductFromCart(cid, pid);
     if (updatedCart.error) return res.status(404).json({ error: updatedCart.error });
 
-    res.json(updatedCart);
+    res.json({ message: "🟢 Producto eliminado correctamente del carrito", cart: updatedCart });
 });
 
 module.exports = router;
